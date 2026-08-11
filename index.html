@@ -4,94 +4,69 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>The Luxe Portal - Berita Premium</title>
-    <!-- Google Fonts for Editorial Aesthetic -->
     <link rel="preconnect" href="https://googleapis.com">
     <link rel="preconnect" href="https://gstatic.com" crossorigin>
     <link href="https://googleapis.com/css2?family=Cinzel:wght@600;700&family=Plus+Jakarta+Sans:wght@400;500;600;700&display=swap" rel="stylesheet">
     <script src="https://tailwindcss.com"></script>
     <script>
         tailwind.config = {
-            theme: {
-                extend: {
-                    fontFamily: {
-                        serif: ['Cinzel', 'serif'],
-                        sans: ['Plus Jakarta Sans', 'sans-serif'],
-                    }
-                }
-            }
+            theme: { extend: { fontFamily: { serif: ['Cinzel', 'serif'], sans: ['Plus Jakarta Sans', 'sans-serif'] } } }
         }
     </script>
 </head>
 <body class="bg-gray-50 text-slate-900 font-sans antialiased">
 
-    <!-- Top Announcement Bar -->
     <div class="bg-stone-900 text-stone-200 text-xs tracking-widest text-center py-2 uppercase font-medium">
         Edisi Premium — Diperbarui Secara Real-Time
     </div>
 
-    <!-- MAIN NAVIGATION MENU (Clear & Bold Structure) -->
+    <!-- Main Navigation Menu -->
     <nav class="bg-white border-b-2 border-stone-200 sticky top-0 z-50 shadow-sm">
         <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
             <div class="flex justify-between h-20 items-center">
-                
-                <!-- Brand Logo -->
-                <a href="#" class="text-2xl md:text-3xl font-serif font-bold tracking-widest text-stone-900 hover:text-amber-700 transition-colors">
-                    THE LUXE
-                </a>
-
-                <!-- Middle Menu Links -->
+                <a href="#" class="text-2xl md:text-3xl font-serif font-bold tracking-widest text-stone-900">THE LUXE</a>
                 <div class="hidden md:flex space-x-8 text-sm font-semibold uppercase tracking-wider">
                     <a href="#" class="text-stone-900 hover:text-amber-600 border-b-2 border-transparent hover:border-amber-600 pb-1 transition-all">Politik</a>
                     <a href="#" class="text-stone-900 hover:text-amber-600 border-b-2 border-transparent hover:border-amber-600 pb-1 transition-all">Bisnis</a>
                     <a href="#" class="text-stone-900 hover:text-amber-600 border-b-2 border-transparent hover:border-amber-600 pb-1 transition-all">Gaya Hidup</a>
-                    <a href="#" class="text-stone-900 hover:text-amber-600 border-b-2 border-transparent hover:border-amber-600 pb-1 transition-all">Teknologi</a>
                 </div>
-
-                <!-- Call to Action / Admin Button (Clear Target) -->
-                <div class="flex items-center space-x-4">
-                    <a href="master.html" class="bg-amber-600 hover:bg-stone-900 text-white font-bold text-xs uppercase tracking-widest px-5 py-3 rounded-md shadow transition-all duration-300 transform hover:-translate-y-0.5">
-                        Dashboard Admin →
-                    </a>
-                </div>
-
+                <a href="master.html" class="bg-amber-600 hover:bg-stone-900 text-white font-bold text-xs uppercase tracking-widest px-5 py-3 rounded-md shadow transition-all duration-300">
+                    Dashboard Admin →
+                </a>
             </div>
         </div>
     </nav>
 
-    <!-- MAIN NEWS HERO SECTION (Clear Background layout) -->
+    <!-- Main Layout Container -->
     <main class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-10">
         <div class="grid grid-cols-1 lg:grid-cols-3 gap-8">
             
-            <!-- Headline Column (Big & Prominent) -->
+            <!-- HEADLINE COLUMN (Dynamic Main News) -->
             <div class="lg:col-span-2 space-y-6">
                 <div class="border-b-4 border-stone-900 pb-2">
-                    <span class="text-xs font-bold uppercase tracking-widest text-amber-700">Berita Utama Hari Ini</span>
+                    <span class="text-xs font-bold uppercase tracking-widest text-amber-700">Headline Berita Utama</span>
                 </div>
                 
-                <!-- Featured News Card -->
-                <article class="bg-white border border-stone-200 rounded-xl overflow-hidden shadow-md hover:shadow-xl transition-shadow duration-300">
-                    <!-- Dynamic Simulated Image Area -->
-                    <div class="h-80 w-full bg-stone-800 flex items-center justify-center relative">
-                        <div class="absolute inset-0 bg-cover bg-center opacity-70" style="background-image: url('https://unsplash.com')"></div>
-                        <div class="absolute inset-0 bg-gradient-to-t from-black/80 via-black/20 to-transparent"></div>
-                        <span class="absolute top-4 left-4 bg-amber-600 text-white text-xs font-bold px-3 py-1.5 uppercase tracking-wider rounded">Eksklusif</span>
+                <!-- Main News Clickable Wrapper Card -->
+                <a id="hero-anchor" href="#" class="block bg-white border border-stone-200 rounded-xl overflow-hidden shadow-md hover:shadow-xl transition-all duration-300 group">
+                    <!-- Dynamic Headline Image -->
+                    <div class="h-96 w-full bg-stone-200 relative overflow-hidden">
+                        <img id="hero-image" src="https://unsplash.com" alt="Headline News" class="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500">
+                        <span id="hero-badge" class="absolute top-4 left-4 bg-amber-600 text-white text-xs font-bold px-3 py-1.5 uppercase tracking-wider rounded shadow">Eksklusif</span>
                     </div>
 
                     <div class="p-6 md:p-8 space-y-4">
-                        <h2 id="hero-title" class="text-2xl md:text-3xl font-serif font-bold text-stone-900 leading-tight">
+                        <h2 id="hero-title" class="text-2xl md:text-3xl font-serif font-bold text-stone-900 leading-tight group-hover:text-amber-700 transition-colors">
                             Menanti Arah Baru Ekonomi Global di Tahun Ini
                         </h2>
                         <p id="hero-desc" class="text-stone-600 text-base leading-relaxed">
                             Analisis mendalam mengenai perubahan kebijakan fiskal dunia, pergeseran rantai pasok industri, dan dampak langsungnya terhadap iklim investasi pasar berkembang.
                         </p>
-                        <div class="pt-2">
-                            <a href="#" class="inline-flex items-center text-xs font-bold uppercase tracking-widest text-amber-700 hover:text-stone-900 transition-colors group">
-                                Baca Selengkapnya 
-                                <span class="ml-2 transform group-hover:translate-x-1 transition-transform">→</span>
-                            </a>
+                        <div class="pt-2 text-xs font-bold uppercase tracking-widest text-amber-700 inline-flex items-center">
+                            Baca Artikel Selengkapnya <span class="ml-2 transform group-hover:translate-x-2 transition-transform">→</span>
                         </div>
                     </div>
-                </article>
+                </a>
             </div>
 
             <!-- Recent Sidebar Column -->
@@ -99,16 +74,11 @@
                 <div class="border-b-4 border-stone-900 pb-2">
                     <span class="text-xs font-bold uppercase tracking-widest text-stone-900">Arus Berita Terbaru</span>
                 </div>
-                
-                <!-- News Feed Container -->
                 <div id="news-list" class="space-y-4">
-                    <!-- Static fallback item -->
-                    <div class="p-5 bg-white border border-stone-200 rounded-xl shadow-sm hover:border-amber-600 transition-colors">
+                    <!-- Fallback placeholder item -->
+                    <div class="p-5 bg-white border border-stone-200 rounded-xl shadow-sm">
                         <span class="text-xs font-bold text-amber-700 uppercase tracking-wider">Bisnis</span>
-                        <h4 class="font-bold text-stone-900 text-base mt-1 hover:text-amber-700 cursor-pointer transition-colors">
-                            Investasi Properti Mewah Meningkat Tajam Semester Ini
-                        </h4>
-                        <p class="text-stone-500 text-xs mt-2">10 Menit yang lalu</p>
+                        <h4 class="font-bold text-stone-900 text-base mt-1">Investasi Properti Mewah Meningkat Tajam Semester Ini</h4>
                     </div>
                 </div>
             </div>
@@ -116,34 +86,38 @@
         </div>
     </main>
 
-    <!-- Footer -->
-    <footer class="bg-stone-900 text-stone-400 text-sm py-8 mt-20 border-t border-stone-800">
-        <div class="max-w-7xl mx-auto px-4 text-center space-y-2">
-            <p class="font-serif text-white tracking-widest font-bold">THE LUXE PORTAL</p>
-            <p>© 2026 Ebonispace-Hue. All Rights Reserved.</p>
-        </div>
+    <footer class="bg-stone-900 text-stone-400 text-sm py-8 mt-20 border-t border-stone-800 text-center">
+        <p class="font-serif text-white tracking-widest font-bold mb-1">THE LUXE PORTAL</p>
+        <p>© 2026 Ebonispace-Hue. All Rights Reserved.</p>
     </footer>
 
-    <!-- Logic Setup to parse custom master.html submissions -->
+    <!-- Rendering Scripts -->
     <script>
         const savedNews = JSON.parse(localStorage.getItem('portal_news')) || [];
         if (savedNews.length > 0) {
-            // Update the main grand hero with the absolute newest broadcast
+            // Pick up the latest item to render into the Headline Card
             const latest = savedNews[savedNews.length - 1];
+            
             document.getElementById('hero-title').innerText = latest.title;
             document.getElementById('hero-desc').innerText = latest.content;
+            document.getElementById('hero-image').src = latest.imageUrl;
+            document.getElementById('hero-anchor').href = latest.articleLink;
+            document.getElementById('hero-badge').innerText = latest.category || 'Utama';
             
             const listContainer = document.getElementById('news-list');
-            listContainer.innerHTML = ''; // Clean placeholder content safely
+            listContainer.innerHTML = ''; 
             
-            // Build modern lists elements for submissions
+            // Build the feed layout
             savedNews.reverse().forEach(news => {
-                const item = document.createElement('div');
-                item.className = 'p-5 bg-white border border-stone-200 rounded-xl shadow-sm hover:border-amber-600 transition-colors';
+                const item = document.createElement('a');
+                item.href = news.articleLink || '#';
+                item.className = 'block p-4 bg-white border border-stone-200 rounded-xl shadow-sm hover:border-amber-600 hover:shadow-md transition-all flex gap-4 items-center group';
                 item.innerHTML = `
-                    <span class="text-xs font-bold text-amber-700 uppercase tracking-wider">${news.category || 'Umum'}</span>
-                    <h4 class="font-bold text-stone-900 text-base mt-1 hover:text-amber-700 cursor-pointer transition-colors">${news.title}</h4>
-                    <p class="text-stone-500 text-xs mt-2">Baru saja diunggah</p>
+                    <img src="${news.imageUrl}" class="w-16 h-16 object-cover rounded-lg bg-stone-100 flex-shrink-0" alt="thumb">
+                    <div>
+                        <span class="text-[10px] font-bold text-amber-700 uppercase tracking-wider">${news.category || 'Umum'}</span>
+                        <h4 class="font-bold text-stone-900 text-sm line-clamp-2 group-hover:text-amber-700 transition-colors">${news.title}</h4>
+                    </div>
                 `;
                 listContainer.appendChild(item);
             });
