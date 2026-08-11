@@ -281,7 +281,7 @@
         }
 
         if(!imageUrl){
-          imageUrl=oldItem?.image || DEFAULT_IMAGE;
+          imageUrl=(oldItem && oldItem.image) || DEFAULT_IMAGE;;
         }
 
         const item={
