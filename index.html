@@ -3,83 +3,87 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>THE LUXE — Jurnalisme Premium & Eksklusif</title>
+    <title>Seputar Cileungsi — Portal Berita & Informasi Terkini</title>
+    
+    <!-- Favicon Resmi Seputar Cileungsi dari FlamingText -->
+    <link rel="icon" type="image/png" href="https://flamingtext.com">
+    
     <link rel="preconnect" href="https://googleapis.com">
     <link rel="preconnect" href="https://gstatic.com" crossorigin>
-    <link href="https://googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,600;0,700;1,400&family=Plus+Jakarta+Sans:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <link href="https://googleapis.com/css2?family=Plus+Jakarta+Sans:wght@300;400;500;600;700&family=Playfair+Display:ital,wght@0,600;0,700;1,400&display=swap" rel="stylesheet">
     <script src="https://tailwindcss.com"></script>
     <script>
         tailwind.config = {
             theme: {
                 extend: {
                     fontFamily: {
-                        serif: ['Playfair Display', 'serif'],
                         sans: ['Plus Jakarta Sans', 'sans-serif'],
+                        serif: ['Playfair Display', 'serif'],
                     }
                 }
             }
         }
     </script>
 </head>
-<body class="bg-[#FDFDFB] text-stone-900 font-sans antialiased tracking-normal">
+<body class="bg-[#FDFDFB] text-stone-900 font-sans antialiased">
 
-    <!-- Top Minimalist Utility Bar -->
+    <!-- Top Info Bar -->
     <div class="border-b border-stone-200/60 bg-white/80 backdrop-blur text-[11px] tracking-[0.2em] text-center py-2.5 uppercase text-stone-500 font-medium">
-        Edisi Internasional — <span id="current-date">Kamis, 12 Agustus 2026</span>
+        Informasi Terpercaya Kecamatan Cileungsi — <span id="current-date">Rabu, 12 Agustus 2026</span>
     </div>
 
-    <!-- Elegant Center-Balanced Navigation -->
-    <nav class="bg-white/90 backdrop-blur sticky top-0 z-50 border-b border-stone-200/80 transition-all">
+    <!-- Navigation Header -->
+    <nav class="bg-white/90 backdrop-blur sticky top-0 z-50 border-b border-stone-200/80 shadow-sm">
         <div class="max-w-7xl mx-auto px-6 h-24 flex items-center justify-between">
             
-            <!-- Left Side: Menu Items -->
+            <!-- Left Navigation Menu Links -->
             <div class="hidden md:flex items-center space-x-8 text-xs font-semibold uppercase tracking-[0.15em] text-stone-600">
-                <a href="#" class="hover:text-amber-700 transition-colors">Politik</a>
-                <a href="#" class="hover:text-amber-700 transition-colors">Bisnis</a>
-                <a href="#" class="hover:text-amber-700 transition-colors">Gaya Hidup</a>
+                <a href="#" class="hover:text-amber-700 transition-colors">Kabar Desa</a>
+                <a href="#" class="hover:text-amber-700 transition-colors">Ekonomi</a>
+                <a href="#" class="hover:text-amber-700 transition-colors">Komunitas</a>
             </div>
 
-            <!-- Center: Premium Editorial Branding -->
-            <a href="index.html" class="text-3xl md:text-4xl font-serif font-bold tracking-[0.25em] text-stone-900 hover:opacity-80 transition-opacity">
-                THE LUXE
+            <!-- Center Logo Area using Dynamic Rendered Asset Link from FlamingText -->
+            <a href="index.html" class="flex items-center justify-center h-16 max-w-[240px] hover:opacity-90 transition-opacity">
+                <img src="https://flamingtext.com" alt="Seputar Cileungsi Logo" class="h-full object-contain">
             </a>
 
-            <!-- Right Side: Clean Solid Action Button -->
+            <!-- Right Side Dashboard Callout Link -->
             <div class="flex items-center">
-                <a href="master.html" class="bg-stone-900 hover:bg-amber-700 text-white font-medium text-[11px] uppercase tracking-[0.2em] px-5 py-3 rounded-none shadow-sm transition-all duration-300">
+                <a href="master.html" class="bg-stone-900 hover:bg-amber-700 text-white font-medium text-[11px] uppercase tracking-[0.2em] px-5 py-3 transition-all duration-300">
                     Dashboard Admin →
                 </a>
             </div>
         </div>
     </nav>
 
-    <!-- Main Editorial Layout -->
+    <!-- Content Workspace Layout -->
     <main class="max-w-7xl mx-auto px-6 py-12">
         <div class="grid grid-cols-1 lg:grid-cols-3 gap-12 items-start">
             
-            <!-- LEFT & CENTER: DYNAMIC HEADLINE CARD -->
+            <!-- HEADLINE COLUMN (Main Featured Block) -->
             <div class="lg:col-span-2 space-y-8">
                 <div class="flex items-center space-x-4 border-b border-stone-200 pb-3">
-                    <span class="text-xs font-bold uppercase tracking-[0.25em] text-amber-800">Headline Utama</span>
+                    <span class="text-xs font-bold uppercase tracking-[0.25em] text-amber-800">Headline Berita Utama</span>
                     <span class="w-1.5 h-1.5 rounded-full bg-amber-700 animate-pulse"></span>
                 </div>
                 
                 <a id="hero-anchor" href="#" class="block group space-y-6">
-                    <!-- Clean Container Image Frame -->
-                    <div class="w-full aspect-[16/10] bg-stone-100 overflow-hidden relative shadow-sm">
-                        <img id="hero-image" src="https://unsplash.com" alt="Cover" class="w-full h-full object-cover group-hover:scale-[1.02] transition-transform duration-700 ease-out">
+                    <!-- Dynamic Main News Media Cover Image Block -->
+                    <div class="w-full aspect-[16/10] bg-stone-100 overflow-hidden relative shadow-sm rounded-lg border border-stone-200/40">
+                        <img id="hero-image" src="https://unsplash.com" alt="Headline News" class="w-full h-full object-cover group-hover:scale-[1.02] transition-transform duration-700 ease-out">
                         <div class="absolute bottom-4 left-4 bg-white/95 backdrop-blur px-3 py-1 text-[10px] font-bold uppercase tracking-widest text-stone-900 border border-stone-200">
-                            <span id="hero-badge">Eksklusif</span>
+                            <span id="hero-badge">Seputar Cileungsi</span>
                         </div>
                     </div>
 
-                    <!-- Editorial Content Grid -->
+                    <!-- Article Information Context Wrapper -->
                     <div class="space-y-4 max-w-3xl">
                         <h2 id="hero-title" class="text-3xl md:text-4xl font-serif font-bold text-stone-900 leading-[1.2] group-hover:text-amber-800 transition-colors duration-300">
-                            Menanti Arah Baru Ekonomi Global di Tahun Ini
+                            Pengembangan Infrastruktur Transportasi di Kawasan Cileungsi Menjadi Prioritas
                         </h2>
                         <p id="hero-desc" class="text-stone-600 font-light text-base md:text-lg leading-relaxed antialiased">
-                            Analisis mendalam mengenai perubahan kebijakan fiskal dunia, pergeseran rantai pasok industri, dan dampak langsungnya terhadap iklim investasi pasar berkembang.
+                            Kecamatan Cileungsi terus berbenah meningkatkan konektivitas jalan utama demi mengurai kepadatan lalu lintas dan mendukung geliat ekonomi logistik wilayah perbatasan.
                         </p>
                         <div class="pt-2 text-xs font-bold uppercase tracking-[0.15em] text-amber-800 flex items-center group-hover:underline decoration-amber-700 underline-offset-4">
                             Baca Selengkapnya <span class="ml-2 transform group-hover:translate-x-2 transition-transform duration-300">→</span>
@@ -88,21 +92,23 @@
                 </a>
             </div>
 
-            <!-- RIGHT COLUMN: LATEST NEWS STREAM -->
+            <!-- SIDEBAR COLUMN (Recent Stories Block Feed) -->
             <div class="space-y-8 lg:border-l lg:border-stone-200/80 lg:pl-8">
                 <div class="border-b border-stone-200 pb-3">
-                    <span class="text-xs font-bold uppercase tracking-[0.25em] text-stone-500">Arus Kabar Terbaru</span>
+                    <span class="text-xs font-bold uppercase tracking-[0.25em] text-stone-500">Kabar Terbaru Terkini</span>
                 </div>
                 
-                <!-- Dynamic Stream Target Container -->
-                <div id="news-list" class="space-y-6 division-y division-stone-200">
-                    <!-- Elegant Fallback Row Layout -->
-                    <div class="pb-6 border-b border-stone-100 last:border-0 group cursor-pointer">
-                        <span class="text-[10px] font-bold text-amber-800 uppercase tracking-widest">Bisnis</span>
-                        <h4 class="font-serif font-bold text-stone-900 text-lg mt-1 group-hover:text-amber-700 transition-colors leading-snug">
-                            Investasi Properti Mewah Meningkat Tajam Semester Ini
-                        </h4>
-                        <p class="text-stone-400 text-xs mt-2 font-medium tracking-wide">10 Menit yang lalu</p>
+                <!-- Target News Container Node Block -->
+                <div id="news-list" class="space-y-6">
+                    <!-- Default Static Row Fallback Element -->
+                    <div class="flex gap-5 items-start py-4 border-b border-stone-100 group cursor-pointer">
+                        <div class="w-20 h-20 bg-stone-100 overflow-hidden flex-shrink-0 relative rounded-md">
+                            <img src="https://unsplash.com" class="w-full h-full object-cover" alt="Thumb">
+                        </div>
+                        <div class="space-y-1">
+                            <span class="text-[9px] font-bold text-amber-800 uppercase tracking-[0.15em]">Ekonomi</span>
+                            <h4 class="font-serif font-bold text-stone-900 text-base leading-snug">Pasar Tradisional Cileungsi Alami Peningkatan Kunjungan</h4>
+                        </div>
                     </div>
                 </div>
             </div>
@@ -110,18 +116,19 @@
         </div>
     </main>
 
-    <!-- Premium Footer Structure -->
+    <!-- Core Layout Footer Frame -->
     <footer class="bg-stone-900 text-stone-400 text-xs py-12 mt-32 border-t border-stone-800 tracking-wider">
         <div class="max-w-7xl mx-auto px-6 text-center space-y-4">
-            <p class="font-serif text-white tracking-[0.3em] font-bold text-lg">THE LUXE</p>
+            <div class="flex items-center justify-center h-12 opacity-80">
+                <img src="https://flamingtext.com" alt="Seputar Cileungsi Footer Logo" class="h-full object-contain filter brightness-0 invert">
+            </div>
             <div class="h-px w-12 bg-amber-600 mx-auto"></div>
-            <p class="text-stone-500 font-light text-[11px]">© 2026 Ebonispace-Hue Portal Network. All Rights Reserved.</p>
+            <p class="text-stone-500 font-light text-[11px]">© 2026 Ebonispace-Hue Network. Didukung oleh [FlamingText](https://www.flamingtext.com/). Seluruh hak cipta dilindungi undang-undang.</p>
         </div>
     </footer>
 
-    <!-- Rendering Controller Engine -->
+    <!-- Rendering Script Engine -->
     <script>
-        // Real date visualization helper
         const options = { weekday: 'long', year: 'numeric', month: 'long', day: 'numeric' };
         document.getElementById('current-date').innerText = new Date().toLocaleDateString('id-ID', options);
 
@@ -138,13 +145,12 @@
             const listContainer = document.getElementById('news-list');
             listContainer.innerHTML = ''; 
             
-            // Clean inline visual block loops
             savedNews.reverse().forEach(news => {
                 const item = document.createElement('a');
                 item.href = news.articleLink || '#';
                 item.className = 'flex gap-5 items-start py-4 border-b border-stone-100 last:border-none group block';
                 item.innerHTML = `
-                    <div class="w-20 h-20 bg-stone-100 overflow-hidden flex-shrink-0 relative">
+                    <div class="w-20 h-20 bg-stone-100 overflow-hidden flex-shrink-0 relative rounded-md border border-stone-200/50">
                         <img src="${news.imageUrl}" class="w-full h-full object-cover group-hover:scale-105 transition-transform duration-300" alt="Thumbnail">
                     </div>
                     <div class="space-y-1">
@@ -155,6 +161,3 @@
                 listContainer.appendChild(item);
             });
         }
-    </script>
-</body>
-</html>
