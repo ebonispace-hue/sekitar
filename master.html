@@ -4,50 +4,71 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Master Dashboard - Portal Berita</title>
+    <link rel="preconnect" href="https://googleapis.com">
+    <link rel="preconnect" href="https://gstatic.com" crossorigin>
+    <link href="https://googleapis.com/css2?family=Cinzel:wght@600;700&family=Plus+Jakarta+Sans:wght@400;500;600;700&display=swap" rel="stylesheet">
     <script src="https://tailwindcss.com"></script>
+    <script>
+        tailwind.config = {
+            theme: { extend: { fontFamily: { serif: ['Cinzel', 'serif'], sans: ['Plus Jakarta Sans', 'sans-serif'] } } }
+        }
+    </script>
 </head>
-<body class="bg-zinc-950 text-gray-100 font-sans flex min-h-screen">
+<body class="bg-gray-50 text-slate-900 font-sans antialiased flex min-h-screen">
 
     <!-- Sidebar Dashboard -->
-    <aside class="w-64 bg-zinc-900 border-r border-zinc-800 p-6 hidden md:block">
+    <aside class="w-64 bg-stone-900 text-stone-200 p-6 hidden md:block">
         <div class="text-xl font-serif font-bold tracking-widest text-amber-500 mb-8">LUXE MASTER</div>
         <nav class="space-y-2">
-            <a href="#" class="block bg-amber-500 text-zinc-950 font-medium px-4 py-2.5 rounded-lg">Tambah Berita</a>
-            <a href="index.html" class="block text-gray-400 hover:text-white px-4 py-2.5 rounded-lg transition">Lihat Situs</a>
+            <a href="#" class="block bg-amber-600 text-white font-semibold px-4 py-2.5 rounded-lg shadow">Tambah Berita</a>
+            <a href="index.html" class="block text-stone-400 hover:text-white px-4 py-2.5 rounded-lg transition">Lihat Situs Utama</a>
         </nav>
     </aside>
 
     <!-- Main Content -->
     <main class="flex-1 p-8 md:p-12">
         <header class="mb-8">
-            <h1 class="text-3xl font-serif font-bold">Dashboard Update Berita</h1>
-            <p class="text-gray-400 text-sm">Unggah dan naikkan berita utama Anda ke halaman depan.</p>
+            <h1 class="text-3xl font-serif font-bold text-stone-900">Dashboard Update Berita</h1>
+            <p class="text-stone-600 text-sm">Unggah berita baru beserta gambar pelengkap ke halaman depan.</p>
         </header>
 
         <!-- Form Tambah Berita -->
-        <section class="max-w-2xl bg-zinc-900 border border-zinc-800 rounded-xl p-6 shadow-xl">
+        <section class="max-w-2xl bg-white border border-stone-200 rounded-xl p-6 shadow-md">
             <form id="news-form" class="space-y-6">
                 <div>
-                    <label class="block text-sm font-medium text-gray-300 mb-2">Judul Berita</label>
-                    <input type="text" id="news-title" required class="w-full bg-zinc-950 border border-zinc-800 rounded-lg px-4 py-3 text-gray-100 focus:outline-none focus:border-amber-500 transition">
+                    <label class="block text-sm font-semibold text-stone-700 mb-2">Judul Berita</label>
+                    <input type="text" id="news-title" required class="w-full bg-gray-50 border-2 border-stone-200 rounded-lg px-4 py-3 text-stone-900 focus:outline-none focus:border-amber-600 transition">
+                </div>
+
+                <div>
+                    <label class="block text-sm font-semibold text-stone-700 mb-2">Link/URL Gambar Berita</label>
+                    <input type="url" id="news-image" placeholder="https://contoh.com" required class="w-full bg-gray-50 border-2 border-stone-200 rounded-lg px-4 py-3 text-stone-900 focus:outline-none focus:border-amber-600 transition">
+                    <p class="text-xs text-stone-500 mt-1">Masukkan link gambar online (bisa cari dari Unsplash, Pexels, atau Imgur).</p>
                 </div>
                 
-                <div>
-                    <label class="block text-sm font-medium text-gray-300 mb-2">Kategori</label>
-                    <select id="news-category" class="w-full bg-zinc-950 border border-zinc-800 rounded-lg px-4 py-3 text-gray-100 focus:outline-none focus:border-amber-500 transition">
-                        <option value="Politik">Politik</option>
-                        <option value="Bisnis">Bisnis</option>
-                        <option value="Gaya Hidup">Gaya Hidup</option>
-                    </select>
+                <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
+                    <div>
+                        <label class="block text-sm font-semibold text-stone-700 mb-2">Kategori</label>
+                        <select id="news-category" class="w-full bg-gray-50 border-2 border-stone-200 rounded-lg px-4 py-3 text-stone-900 focus:outline-none focus:border-amber-600 transition">
+                            <option value="Politik">Politik</option>
+                            <option value="Bisnis">Bisnis</option>
+                            <option value="Gaya Hidup">Gaya Hidup</option>
+                            <option value="Teknologi">Teknologi</option>
+                        </select>
+                    </div>
+                    <div>
+                        <label class="block text-sm font-semibold text-stone-700 mb-2">Link Tujuan Artikel (Jika diklik)</label>
+                        <input type="url" id="news-link" placeholder="https://..." class="w-full bg-gray-50 border-2 border-stone-200 rounded-lg px-4 py-3 text-stone-900 focus:outline-none focus:border-amber-600 transition">
+                    </div>
                 </div>
 
                 <div>
-                    <label class="block text-sm font-medium text-gray-300 mb-2">Isi Singkat Berita</label>
-                    <textarea id="news-content" rows="4" required class="w-full bg-zinc-950 border border-zinc-800 rounded-lg px-4 py-3 text-gray-100 focus:outline-none focus:border-amber-500 transition"></textarea>
+                    <label class="block text-sm font-semibold text-stone-700 mb-2">Isi Singkat Berita</label>
+                    <textarea id="news-content" rows="4" required class="w-full bg-gray-50 border-2 border-stone-200 rounded-lg px-4 py-3 text-stone-900 focus:outline-none focus:border-amber-600 transition"></textarea>
                 </div>
 
-                <button type="submit" class="w-full bg-amber-500 hover:bg-amber-600 text-zinc-950 font-bold py-3 rounded-lg transition tracking-wide uppercase text-sm">
-                    Terbitkan & Naikkan Berita
+                <button type="submit" class="w-full bg-amber-600 hover:bg-stone-900 text-white font-bold py-3.5 rounded-lg transition shadow tracking-widest uppercase text-xs">
+                    Terbitkan & Naikkan Berita Utama
                 </button>
             </form>
         </section>
@@ -58,15 +79,18 @@
             e.preventDefault();
             
             const title = document.getElementById('news-title').value;
+            const imageUrl = document.getElementById('news-image').value;
             const category = document.getElementById('news-category').value;
+            const articleLink = document.getElementById('news-link').value || '#';
             const content = document.getElementById('news-content').value;
 
-            // Simulasi penyimpanan data menggunakan localStorage
             const currentNews = JSON.parse(localStorage.getItem('portal_news')) || [];
-            currentNews.push({ title, category, content });
+            
+            // Simpan objek data lengkap beserta link gambar
+            currentNews.push({ title, imageUrl, category, articleLink, content });
             localStorage.setItem('portal_news', JSON.stringify(currentNews));
 
-            alert('Berita berhasil dinaikkan ke halaman utama!');
+            alert('Berita Utama berhasil dinaikkan!');
             this.reset();
         });
     </script>
