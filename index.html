@@ -1,0 +1,72 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Luxury News Portal</title>
+    <script src="https://tailwindcss.com"></script>
+</head>
+<body class="bg-zinc-950 text-gray-100 font-sans">
+
+    <!-- Navbar -->
+    <nav class="border-b border-zinc-800 bg-zinc-900/50 backdrop-blur-md sticky top-0 z-50">
+        <div class="max-w-7xl mx-auto px-6 py-4 flex justify-between items-center">
+            <a href="#" class="text-2xl font-serif font-bold tracking-widest text-amber-500">THE LUXE</a>
+            <div class="space-x-6 text-sm uppercase tracking-wider text-gray-400">
+                <a href="#" class="hover:text-amber-400 transition">Politik</a>
+                <a href="#" class="hover:text-amber-400 transition">Bisnis</a>
+                <a href="#" class="hover:text-amber-400 transition">Gaya Hidup</a>
+            </div>
+        </div>
+    </nav>
+
+    <!-- Hero Section / Berita Utama -->
+    <main class="max-w-7xl mx-auto px-6 py-12">
+        <div class="grid grid-cols-1 lg:grid-cols-3 gap-8">
+            
+            <!-- Berita Utama (Besar) -->
+            <div class="lg:col-span-2 group cursor-pointer">
+                <div class="relative overflow-hidden rounded-xl bg-zinc-900 border border-zinc-800 aspect-video mb-4">
+                    <div class="absolute inset-0 bg-gradient-to-t from-zinc-950 via-transparent to-transparent z-10"></div>
+                    <div class="absolute bottom-0 p-8 z-20">
+                        <span class="bg-amber-500 text-zinc-950 text-xs font-bold px-3 py-1 rounded-full uppercase tracking-widest">Utama</span>
+                        <h2 id="hero-title" class="text-3xl md:text-4xl font-serif font-bold mt-3 mb-2 group-hover:text-amber-400 transition">Menanti Arah Baru Ekonomi Global di Tahun Ini</h2>
+                        <p id="hero-desc" class="text-gray-400 text-sm line-clamp-2">Analisis mendalam mengenai perubahan kebijakan fiskal dunia dan dampaknya terhadap pasar berkembang.</p>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Sidebar / Berita Terbaru -->
+            <div class="space-y-6">
+                <h3 class="text-xl font-serif font-bold text-amber-500 border-b border-zinc-800 pb-2">Berita Terbaru</h3>
+                <div id="news-list" class="space-y-4">
+                    <!-- Berita akan muncul di sini dari localStorage -->
+                    <div class="p-4 bg-zinc-900 border border-zinc-800 rounded-lg">
+                        <span class="text-xs text-amber-500 font-semibold uppercase">Bisnis</span>
+                        <h4 class="font-medium mt-1">Investasi Properti Mewah Meningkat Tajam</h4>
+                    </div>
+                </div>
+            </div>
+
+        </div>
+    </main>
+
+    <script>
+        // Mengambil berita terbaru dari localStorage jika ada
+        const savedNews = JSON.parse(localStorage.getItem('portal_news')) || [];
+        if (savedNews.length > 0) {
+            const latest = savedNews[savedNews.length - 1];
+            document.getElementById('hero-title').innerText = latest.title;
+            document.getElementById('hero-desc').innerText = latest.content;
+            
+            const listContainer = document.getElementById('news-list');
+            savedNews.reverse().forEach(news => {
+                const item = document.createElement('div');
+                item.className = 'p-4 bg-zinc-900 border border-zinc-800 rounded-lg';
+                item.innerHTML = `<span class="text-xs text-amber-500 font-semibold uppercase">${news.category}</span><h4 class="font-medium mt-1">${news.title}</h4>`;
+                listContainer.appendChild(item);
+            });
+        }
+    </script>
+</body>
+</html>
