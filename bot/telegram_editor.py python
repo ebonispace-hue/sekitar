@@ -7,7 +7,7 @@ from openai import AsyncOpenAI
 from telegram import Update
 from telegram.ext import Application, CommandHandler, ContextTypes
 
-TELEGRAM_BOT_TOKEN = os.environ["TELEGRAM_BOT_TOKEN"]
+TELEGRAM_BOT_TOKEN = os.environ["EDITOR_TELEGRAM_BOT_TOKEN"]
 OPENAI_API_KEY = os.environ["OPENAI_API_KEY"]
 ALLOWED_USER_ID = int(os.environ["ALLOWED_TELEGRAM_USER_ID"])
 
