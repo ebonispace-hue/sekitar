@@ -12,11 +12,26 @@ STATE_FILE = Path("bot/sent_articles.json")
 MAX_ALERTS_PER_RUN = 8
 
 TOPICS = [
-    ("📍 Cileungsi & Bogor", '"Cileungsi" OR "Gunung Putri" OR "Jonggol" OR "Klapanunggal" OR "Citeureup"'),
-    ("🏠 Properti", '"rumah dijual Cileungsi" OR "rumah subsidi Cileungsi" OR "harga rumah Cileungsi"'),
-    ("💼 Loker & usaha", '"loker Cileungsi" OR "lowongan kerja Bogor" OR "UMKM Bogor" OR "usaha rumahan"'),
-    ("🤖 AI & teknologi", '"manfaat AI" OR "AI untuk UMKM" OR "AI untuk kerja"'),
-    ("💡 Peluang digital", '"cara menghasilkan uang internet" OR "freelance Indonesia" OR "affiliate marketing Indonesia"'),
+    (
+        "📍 Cileungsi & Bogor",
+        '"Cileungsi" OR "Gunung Putri" OR "Jonggol" OR "Klapanunggal" OR "Citeureup"',
+    ),
+    (
+        "🏠 Properti",
+        '"rumah dijual Cileungsi" OR "rumah subsidi Cileungsi" OR "harga rumah Cileungsi"',
+    ),
+    (
+        "💼 Loker & usaha",
+        '"loker Cileungsi" OR "lowongan kerja Bogor" OR "UMKM Bogor" OR "usaha rumahan"',
+    ),
+    (
+        "🤖 AI & teknologi",
+        '"manfaat AI" OR "AI untuk UMKM" OR "AI untuk kerja"',
+    ),
+    (
+        "💡 Peluang digital",
+        '"cara menghasilkan uang internet" OR "freelance Indonesia" OR "affiliate marketing Indonesia"',
+    ),
 ]
 
 
@@ -37,7 +52,11 @@ def save_sent(sent):
 
 
 def google_news_feed(query):
-    url = "https://news.google.com/rss/search?q=" + quote_plus(query) + "&hl=id&gl=ID&ceid=ID:id"
+    url = (
+        "https://news.google.com/rss/search?q="
+        + quote_plus(query)
+        + "&hl=id&gl=ID&ceid=ID:id"
+    )
     return feedparser.parse(url)
 
 
@@ -51,6 +70,7 @@ def collect_articles(sent):
 
     for category, query in TOPICS:
         feed = google_news_feed(query)
+
         for entry in feed.entries[:10]:
             link = clean(entry.get("link"))
             title = clean(entry.get("title"))
@@ -61,13 +81,15 @@ def collect_articles(sent):
                 continue
 
             seen_now.add(link)
-            found.append({
-                "category": category,
-                "title": title,
-                "source": source,
-                "published": published,
-                "link": link,
-            })
+            found.append(
+                {
+                    "category": category,
+                    "title": title,
+                    "source": source,
+                    "published": published,
+                    "link": link,
+                }
+            )
 
     return found[:MAX_ALERTS_PER_RUN]
 
@@ -83,27 +105,38 @@ def send_message(text):
         timeout=30,
     )
     response.raise_for_status()
+
     result = response.json()
-    print(f"Pesan Telegram berhasil dikirim. Message ID: {result['result']['message_id']}")
+    print(
+        f"Pesan Telegram berhasil dikirim. "
+        f"Message ID: {result['result']['message_id']}"
+    )
 
 
 def main():
     sent = load_sent()
     articles = collect_articles(sent)
-print(f"Jumlah artikel baru ditemukan: {len(articles)}")
+
+    print(f"Jumlah artikel baru ditemukan: {len(articles)}")
+
     if not articles:
-        send_message("✅ Info Cileungsi Monitor aktif. Tidak ada rekomendasi baru pada pengecekan ini.")
+        send_message(
+            "✅ Info Cileungsi Monitor aktif.\n"
+            "Tidak ada rekomendasi berita baru pada pengecekan ini."
+        )
         return
 
     for article in articles:
         message = (
-            f"{article['category']}\\n\\n"
-            f"📰 {article['title']}\\n"
-            f"Sumber: {article['source']}\\n"
-            f"Waktu: {article['published'] or '-'}\\n\\n"
-            f"🔗 {article['link']}\\n\\n"
-            "Catatan: cek sumber dan tulis ulang dengan sudut pandang original sebelum dipublikasikan."
+            f"{article['category']}\n\n"
+            f"📰 {article['title']}\n"
+            f"Sumber: {article['source']}\n"
+            f"Waktu: {article['published'] or '-'}\n\n"
+            f"🔗 {article['link']}\n\n"
+            "Catatan: cek sumber dan tulis ulang dengan sudut pandang "
+            "original sebelum dipublikasikan."
         )
+
         send_message(message)
         sent.add(article["link"])
 
