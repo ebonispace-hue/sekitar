@@ -83,12 +83,14 @@ def send_message(text):
         timeout=30,
     )
     response.raise_for_status()
+    result = response.json()
+    print(f"Pesan Telegram berhasil dikirim. Message ID: {result['result']['message_id']}")
 
 
 def main():
     sent = load_sent()
     articles = collect_articles(sent)
-
+print(f"Jumlah artikel baru ditemukan: {len(articles)}")
     if not articles:
         send_message("✅ Info Cileungsi Monitor aktif. Tidak ada rekomendasi baru pada pengecekan ini.")
         return
