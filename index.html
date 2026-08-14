@@ -3,18 +3,17 @@
 <head>
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width,initial-scale=1">
-
   <title>Cileungsi Sekitar | Berita Lokal Cileungsi dan Sekitarnya</title>
   <meta name="description" content="Portal berita hyperlocal Cileungsi. Baca kabar, cerita, informasi, dan peristiwa terbaru dari Cileungsi serta kawasan sekitarnya.">
   <meta name="robots" content="index,follow,max-snippet:-1,max-video-preview:-1,max-image-preview:large">
-  <link id="canonical" rel="canonical" href="https://infocileungsi.web.id/">
+  <link id="canonical" rel="canonical" href="https://ebonispace-hue.github.io/sekitar/">
 
   <meta property="og:locale" content="id_ID">
   <meta property="og:type" content="website">
   <meta property="og:site_name" content="Cileungsi Sekitar">
   <meta id="og-title" property="og:title" content="Cileungsi Sekitar | Berita Lokal Cileungsi dan Sekitarnya">
   <meta id="og-description" property="og:description" content="Kabar dan cerita dari Cileungsi serta kawasan sekitarnya.">
-  <meta id="og-url" property="og:url" content="https://infocileungsi.web.id/">
+  <meta id="og-url" property="og:url" content="https://ebonispace-hue.github.io/sekitar/">
   <meta id="og-image" property="og:image" content="https://cdn.phototourl.com/free/2026-08-11-265895a0-1677-4fbf-9f9c-e7e7b550d54c.png">
 
   <meta name="twitter:card" content="summary_large_image">
@@ -29,7 +28,7 @@
     "@context": "https://schema.org",
     "@type": "WebSite",
     "name": "Cileungsi Sekitar",
-    "url": "https://infocileungsi.web.id/",
+    "url": "https://ebonispace-hue.github.io/sekitar/",
     "inLanguage": "id-ID",
     "description": "Portal berita hyperlocal Cileungsi dan kawasan sekitarnya."
   }
@@ -40,7 +39,7 @@
     "@context": "https://schema.org",
     "@type": "Organization",
     "name": "Cileungsi Sekitar",
-    "url": "https://infocileungsi.web.id/",
+    "url": "https://ebonispace-hue.github.io/sekitar/",
     "logo": "https://cdn.phototourl.com/free/2026-08-11-265895a0-1677-4fbf-9f9c-e7e7b550d54c.png"
   }
   </script>
@@ -63,10 +62,10 @@
     .hero h1{font-size:clamp(42px,7vw,76px);line-height:.92;letter-spacing:-4px;margin:10px 0}
     .hero p{max-width:295px;color:var(--muted);line-height:1.55}
     .tag{font-size:12px;color:var(--cyan);font-weight:bold;letter-spacing:1.5px}
-    .grid{display:grid;grid-template-columns:repeat(3,1fr);gap:17px}
+    .grid{display:grid;grid-template-columns:repeat(3,1fr);gap:17px;margin-top:35px}
     .card{background:var(--card);border:1px solid var(--line);border-radius:17px;overflow:hidden;transition:.2s}
     .card:hover{transform:translateY(-5px);border-color:var(--cyan)}
-    .card a{display:block;text-decoration:none;color:inherit}
+    .card a{display:block;color:inherit;text-decoration:none}
     .cover{height:205px;position:relative;overflow:hidden;background:#17243e}
     .cover img{width:100%;height:100%;object-fit:cover}
     .label{position:absolute;top:12px;left:12px;background:#07101ee0;border:1px solid #ffffff44;border-radius:99px;padding:5px 8px;font-size:10px;font-weight:bold}
@@ -82,29 +81,17 @@
     .articleBody{padding:32px}
     .articleBody h2{font-size:clamp(29px,5vw,49px);line-height:1.05;margin:9px 0 24px}
     .full{white-space:pre-wrap;line-height:1.8;color:#d8e2ef}
-    @media(max-width:720px){
-      nav,main{padding-left:16px;padding-right:16px}
-      .radius{display:none}
-      main{padding-top:35px}
-      .hero{display:block}
-      .hero h1{letter-spacing:-2.5px}
-      .grid{grid-template-columns:1fr}
-      .cover{height:220px}
-      .article>img{height:230px}
-    }
+    .full a{color:var(--cyan);text-decoration:underline;text-underline-offset:3px}
+    .tags{display:flex;flex-wrap:wrap;gap:8px;margin-top:26px}
+    .tagItem{display:inline-flex;align-items:center;border:1px solid var(--line);border-radius:99px;padding:7px 10px;color:var(--cyan);font-size:12px;line-height:1}
+    @media(max-width:720px){nav,main{padding-left:16px;padding-right:16px}.radius{display:none}main{padding-top:35px}.hero{display:block}.hero h1{letter-spacing:-2.5px}.grid{grid-template-columns:1fr}.cover{height:220px}.article>img{height:230px}}
   </style>
 </head>
-
 <body>
   <header>
     <nav aria-label="Navigasi utama">
       <div class="brand">
-        <img
-          src="https://cdn.phototourl.com/free/2026-08-11-265895a0-1677-4fbf-9f9c-e7e7b550d54c.png"
-          alt="Logo Cileungsi Sekitar"
-          width="38"
-          height="38"
-        >
+        <img src="https://cdn.phototourl.com/free/2026-08-11-265895a0-1677-4fbf-9f9c-e7e7b550d54c.png" alt="Logo Cileungsi Sekitar" width="38" height="38">
         CILEUNGSI <span>SEKITAR</span>
       </div>
       <div class="radius">● Berita Akurat & Tepat</div>
@@ -120,18 +107,10 @@
       <p>Kabar dan cerita dari Cileungsi serta kawasan sekitarnya. Klik berita untuk membaca artikel lengkap.</p>
     </section>
 
-    
     <section id="grid" class="grid" aria-label="Daftar berita terbaru"></section>
   </main>
 
-  <div
-    id="modal"
-    class="modal"
-    role="dialog"
-    aria-modal="true"
-    aria-labelledby="title"
-    aria-hidden="true"
-  >
+  <div id="modal" class="modal" role="dialog" aria-modal="true" aria-labelledby="title" aria-hidden="true">
     <article class="article">
       <button id="close" class="close" type="button" aria-label="Tutup artikel">×</button>
       <img id="photo" src="" alt="" width="820" height="340">
@@ -139,12 +118,13 @@
         <div class="tag">CILEUNGSI SEKITAR • ARTIKEL</div>
         <h2 id="title"></h2>
         <div id="text" class="full"></div>
+        <div id="tags" class="tags" aria-label="Tag artikel"></div>
       </div>
     </article>
   </div>
 
   <script>
-    const SITE_URL = 'https://infocileungsi.web.id/';
+    const SITE_URL = 'https://ebonispace-hue.github.io/sekitar/';
     const SITE_NAME = 'Cileungsi Sekitar';
     const DEFAULT_TITLE = 'Cileungsi Sekitar | Berita Lokal Cileungsi dan Sekitarnya';
     const DEFAULT_DESCRIPTION = 'Portal berita hyperlocal Cileungsi. Baca kabar, cerita, informasi, dan peristiwa terbaru dari Cileungsi serta kawasan sekitarnya.';
@@ -163,9 +143,7 @@
       "'": '&#39;'
     }[char]));
 
-    const cleanText = value => String(value || '')
-      .replace(/\s+/g, ' ')
-      .trim();
+    const cleanText = value => String(value || '').replace(/\s+/g, ' ').trim();
 
     const descriptionFrom = article => {
       const text = cleanText(article);
@@ -182,7 +160,6 @@
     function setSeoHome() {
       document.title = DEFAULT_TITLE;
       q('#canonical').href = SITE_URL;
-
       setMeta('meta[name="description"]', DEFAULT_DESCRIPTION);
       setMeta('#og-title', DEFAULT_TITLE);
       setMeta('#og-description', DEFAULT_DESCRIPTION);
@@ -191,7 +168,6 @@
       setMeta('#twitter-title', DEFAULT_TITLE);
       setMeta('#twitter-description', DEFAULT_DESCRIPTION);
       setMeta('#twitter-image', DEFAULT_IMAGE);
-
       q('#article-schema').textContent = '{}';
     }
 
@@ -203,7 +179,6 @@
 
       document.title = title;
       q('#canonical').href = url;
-
       setMeta('meta[name="description"]', description);
       setMeta('#og-title', title);
       setMeta('#og-description', description);
@@ -216,79 +191,59 @@
       q('#article-schema').textContent = JSON.stringify({
         '@context': 'https://schema.org',
         '@type': 'NewsArticle',
-        mainEntityOfPage: {
-          '@type': 'WebPage',
-          '@id': url
-        },
+        mainEntityOfPage: {'@type': 'WebPage', '@id': url},
         headline: cleanText(n.headline),
         description,
         image: [image],
-        datePublished: n.datePublished || new Date().toISOString(),
-        dateModified: n.dateModified || n.datePublished || new Date().toISOString(),
-        author: {
-          '@type': 'Organization',
-          name: SITE_NAME,
-          url: SITE_URL
-        },
+        datePublished: n.publishedAt || new Date().toISOString(),
+        dateModified: n.modifiedAt || n.publishedAt || new Date().toISOString(),
+        author: {'@type': 'Organization', name: SITE_NAME, url: SITE_URL},
         publisher: {
           '@type': 'Organization',
           name: SITE_NAME,
-          logo: {
-            '@type': 'ImageObject',
-            url: DEFAULT_IMAGE
-          }
+          logo: {'@type': 'ImageObject', url: DEFAULT_IMAGE}
         },
         inLanguage: 'id-ID'
       });
     }
 
-    async function start() {
-      try {
-        const response = await fetch('berita.json', { cache: 'no-cache' });
+    function linkify(text) {
+      const escaped = esc(text);
+      return escaped.replace(/(https?:\/\/[^\s<]+)/g, url => {
+        const safeUrl = url.replace(/[.,!?;:]+$/, '');
+        const trailing = url.slice(safeUrl.length);
+        return `<a href="${safeUrl}" target="_blank" rel="noopener">${safeUrl}</a>${trailing}`;
+      });
+    }
 
-        if (!response.ok) {
-          throw new Error(`Gagal memuat berita: ${response.status}`);
-        }
+    function renderTags(tags) {
+      const validTags = Array.isArray(tags) ? tags : [];
+      q('#tags').innerHTML = validTags
+        .filter(tag => String(tag || '').trim())
+        .map(tag => `<span class="tagItem">#${esc(tag)}</span>`)
+        .join('');
+    }
 
-        news = await response.json();
-
-        if (!Array.isArray(news)) {
-          throw new Error('Format berita.json harus berupa array.');
-        }
-      } catch (error) {
-        news = [];
-      }
-
-    
-
+    function renderGrid() {
       q('#grid').innerHTML = news.map(n => {
         const id = esc(n.id);
         const headline = esc(n.headline);
-        const image = esc(n.image);
+        const image = esc(n.image || DEFAULT_IMAGE);
         const excerpt = esc(descriptionFrom(n.article));
 
-        return `
-          <article class="card">
-            <a href="#artikel=${encodeURIComponent(n.id)}" data-id="${id}" aria-label="Baca artikel: ${headline}">
-              <div class="cover">
-                <img
-                  src="${image}"
-                  alt="${headline}"
-                  width="360"
-                  height="205"
-                  loading="lazy"
-                  decoding="async"
-                >
-                <span class="label">BERITA LOKAL</span>
-              </div>
-              <div class="body">
-                <h2>${headline}</h2>
-                <p class="excerpt">${excerpt}</p>
-                <div class="url">CILEUNGSI SEKITAR • BACA ARTIKEL</div>
-              </div>
-            </a>
-          </article>
-        `;
+        return `<article class="card">
+          <a href="#artikel=${encodeURIComponent(n.id)}" data-id="${id}" aria-label="Baca artikel: ${headline}">
+            <div class="cover">
+              <img src="${image}" alt="${headline}" width="360" height="205" loading="lazy" decoding="async">
+              <span class="label">BERITA LOKAL</span>
+            </div>
+            <div class="body">
+              <h2>${headline}</h2>
+              <p class="excerpt">${excerpt}</p>
+              <div class="url">CILEUNGSI SEKITAR • BACA ARTIKEL</div>
+            </div>
+          </a>
+        </article>`;
       }).join('') || '<p>Belum ada berita.</p>';
 
       document.querySelectorAll('[data-id]').forEach(link => {
@@ -297,70 +252,62 @@
           open(link.dataset.id, true);
         });
       });
+    }
 
+    async function start() {
+      try {
+        const response = await fetch('berita.json', {cache: 'no-cache'});
+        if (!response.ok) throw new Error(`HTTP ${response.status}`);
+        news = await response.json();
+        if (!Array.isArray(news)) throw new Error('Format berita.json harus array.');
+      } catch (error) {
+        news = [];
+      }
+
+      renderGrid();
       openFromHash();
     }
 
-    function open(id, updateHash = false) {
+    function open(id, updateHash) {
       const n = news.find(item => String(item.id) === String(id));
-
       if (!n) return;
 
       previouslyFocused = document.activeElement;
-
       q('#photo').src = n.image || DEFAULT_IMAGE;
       q('#photo').alt = n.headline || 'Gambar berita Cileungsi Sekitar';
       q('#title').textContent = n.headline || '';
-      q('#text').textContent = n.article || '';
+      q('#text').innerHTML = linkify(n.article || '');
+      renderTags(n.tags);
       q('#modal').classList.add('open');
       q('#modal').setAttribute('aria-hidden', 'false');
-
       setSeoArticle(n);
 
-      if (updateHash) {
-        history.pushState({ article: n.id }, '', `#artikel=${encodeURIComponent(n.id)}`);
-      }
-
+      if (updateHash) history.pushState({article: n.id}, '', `#artikel=${encodeURIComponent(n.id)}`);
       q('#close').focus();
     }
 
-    function closeModal(resetUrl = true) {
+    function closeModal(resetUrl) {
       q('#modal').classList.remove('open');
       q('#modal').setAttribute('aria-hidden', 'true');
-
-      if (resetUrl) {
-        history.pushState({}, '', SITE_URL);
-      }
-
+      if (resetUrl) history.pushState({}, '', SITE_URL);
       setSeoHome();
-
-      if (previouslyFocused) {
-        previouslyFocused.focus();
-      }
+      if (previouslyFocused) previouslyFocused.focus();
     }
 
     function openFromHash() {
       const params = new URLSearchParams(location.hash.replace(/^#/, ''));
-
-      if (params.has('artikel')) {
-        open(params.get('artikel'), false);
-      } else {
-        closeModal(false);
-      }
+      if (params.has('artikel')) open(params.get('artikel'), false);
+      else closeModal(false);
     }
 
-    q('#close').addEventListener('click', () => closeModal());
+    q('#close').addEventListener('click', () => closeModal(true));
 
     q('#modal').addEventListener('click', event => {
-      if (event.target === q('#modal')) {
-        closeModal();
-      }
+      if (event.target === q('#modal')) closeModal(true);
     });
 
     document.addEventListener('keydown', event => {
-      if (event.key === 'Escape' && q('#modal').classList.contains('open')) {
-        closeModal();
-      }
+      if (event.key === 'Escape' && q('#modal').classList.contains('open')) closeModal(true);
     });
 
     window.addEventListener('hashchange', openFromHash);
