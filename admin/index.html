@@ -3,6 +3,7 @@
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width,initial-scale=1">
+<meta name="robots" content="noindex,nofollow,noarchive">
 <title>Master Cileungsi Sekitar</title>
 <link rel="icon" href="https://cdn.phototourl.com/free/2026-08-11-265895a0-1677-4fbf-9f9c-e7e7b550d54c.png">
 <style>
@@ -11,30 +12,40 @@ body{margin:0;background:#07101e;color:#edf5ff;font:15px Arial,sans-serif}main{m
 </head>
 <body>
 <main>
-<div class="logo"><img src="https://cdn.phototourl.com/free/2026-08-11-265895a0-1677-4fbf-9f9c-e7e7b550d54c.png" alt="Logo"> CILEUNGSI SEKITAR / PANEL MASTER</div>
+<div class="logo"><img src="https://cdn.phototourl.com/free/2026-08-11-265895a0-1677-4fbf-9f9c-e7e7b550d54c.png" alt="Logo Cileungsi Sekitar" width="40" height="40"> CILEUNGSI SEKITAR / PANEL MASTER</div>
 <h1>Kelola berita</h1>
 <p>Lindungi halaman ini melalui Cloudflare Access. Token GitHub hanya dipakai selama halaman terbuka dan tidak disimpan.</p>
+
 <section id="login" class="box">
-<label>GitHub fine-grained token<input id="token" type="password" placeholder="github_pat_..."></label>
+<label>GitHub fine-grained token<input id="token" type="password" autocomplete="off" placeholder="github_pat_..."></label>
 <button id="connect" type="button" class="primary">Hubungkan GitHub</button>
-<p id="loginMsg"></p>
+<p id="loginMsg" aria-live="polite"></p>
 </section>
+
 <section id="app" class="hide">
 <section class="box">
 <h2 id="formTitle">Terbitkan berita</h2>
 <form id="form">
-<label>Headline<input id="headline" required></label>
+<label>Headline<input id="headline" required maxlength="150" autocomplete="off"></label>
+
+<label>Tag artikel<small>Pisahkan setiap tag dengan koma. Contoh: Cileungsi, Kuliner, UMKM</small><input id="tags" placeholder="Cileungsi, Berita Lokal" autocomplete="off"></label>
+
 <label>URL gambar langsung<small>Opsional. Isi jika sudah memiliki URL gambar JPG, PNG, WebP, atau GIF.</small><input id="image" type="url" placeholder="https://contoh.com/foto.jpg"></label>
+
 <label>Atau upload gambar dari perangkat<small>Opsional. Jika URL dan file diisi, file upload yang dipakai. Maksimal 5 MB.</small><input id="imageFile" type="file" accept="image/jpeg,image/png,image/webp,image/gif"></label>
-<label>Artikel<textarea id="article" required></textarea></label>
-<button class="primary">Terbitkan ke GitHub</button>
+
+<label>Artikel<small>URL lengkap yang Anda tulis otomatis menjadi link di halaman berita. Contoh: https://sewapscileungsi.com/</small><textarea id="article" required></textarea></label>
+
+<button class="primary" type="submit">Terbitkan ke GitHub</button>
 <button id="cancel" type="button">Batal</button>
 </form>
-<p id="msg"></p>
+<p id="msg" aria-live="polite"></p>
 </section>
+
 <section class="box"><h2>Berita tersimpan</h2><div id="list"></div></section>
 </section>
 </main>
+
 <script>
 const OWNER='ebonispace-hue';
 const REPO='sekitar';
@@ -42,19 +53,249 @@ const FILE='berita.json';
 const BRANCH='main';
 const DEFAULT_IMAGE='https://cdn.phototourl.com/free/2026-08-11-265895a0-1677-4fbf-9f9c-e7e7b550d54c.png';
 const api='https://api.github.com/repos/'+OWNER+'/'+REPO+'/contents/'+FILE;
+
 let token='',sha='',news=[],editId=null;
-const $=function(s){return document.querySelector(s)};
-const loginBox=$('#login'),appBox=$('#app'),loginMsg=$('#loginMsg'),form=$('#form'),headline=$('#headline'),image=$('#image'),imageFile=$('#imageFile'),article=$('#article'),formTitle=$('#formTitle'),msg=$('#msg'),list=$('#list'),connect=$('#connect'),cancel=$('#cancel');
-function head(){return{Authorization:'Bearer '+token,Accept:'application/vnd.github+json'}}
-function encodeJson(data){return btoa(unescape(encodeURIComponent(JSON.stringify(data,null,2)+'\n')))}
-async function load(){let r=await fetch(api+'?ref='+BRANCH,{headers:head()});if(!r.ok)throw Error('Akses ditolak ('+r.status+'). Token perlu izin Contents: Read and write untuk repository ini.');let d=await r.json();sha=d.sha;news=JSON.parse(decodeURIComponent(escape(atob(d.content.replace(/\n/g,'')))));draw()}
-function draw(){list.innerHTML=news.map(function(x){return '<div class="item"><strong>'+x.headline+'</strong><button data-e="'+x.id+'">Edit</button><button data-d="'+x.id+'">Hapus</button></div>'}).join('')||'Belum ada berita.';document.querySelectorAll('[data-e]').forEach(function(b){b.onclick=function(){let x=news.find(function(n){return n.id===b.dataset.e});if(!x)return;editId=x.id;headline.value=x.headline;image.value=x.image||'';imageFile.value='';article.value=x.article;formTitle.textContent='Edit berita'}});document.querySelectorAll('[data-d]').forEach(function(b){b.onclick=function(){if(confirm('Hapus berita ini?')){news=news.filter(function(n){return n.id!==b.dataset.d});save('Hapus berita')}}})}
-async function save(message){msg.className='';msg.textContent='Menyimpan berita…';let r=await fetch(api,{method:'PUT',headers:Object.assign({},head(),{'Content-Type':'application/json'}),body:JSON.stringify({message:message,content:encodeJson(news),sha:sha,branch:BRANCH})});if(!r.ok){let e=await r.json().catch(function(){return{}});msg.className='err';msg.textContent='Gagal menyimpan: '+(e.message||'HTTP '+r.status);return false}sha=(await r.json()).content.sha;msg.className='ok';msg.textContent='Berhasil. Homepage akan diperbarui otomatis oleh Cloudflare Pages.';form.reset();editId=null;formTitle.textContent='Terbitkan berita';draw();return true}
-function fileToBase64(file){return new Promise(function(resolve,reject){let reader=new FileReader();reader.onload=function(){resolve(String(reader.result).split(',')[1])};reader.onerror=function(){reject(Error('File gambar tidak dapat dibaca.'))};reader.readAsDataURL(file)})}
-async function uploadImage(file){let types=['image/jpeg','image/png','image/webp','image/gif'];if(types.indexOf(file.type)===-1)throw Error('Gunakan gambar JPG, PNG, WebP, atau GIF.');if(file.size>5*1024*1024)throw Error('Ukuran gambar maksimal 5 MB.');let ext=(file.name.split('.').pop()||'jpg').toLowerCase().replace(/[^a-z0-9]/g,'')||'jpg';let clean=(headline.value.trim()||'berita').toLowerCase().replace(/[^a-z0-9]+/g,'-').replace(/^-+|-+$/g,'').slice(0,55)||'berita';let filename=Date.now()+'-'+clean+'.'+ext;let path='assets/images/'+filename;let fileApi='https://api.github.com/repos/'+OWNER+'/'+REPO+'/contents/assets/images/'+encodeURIComponent(filename);let r=await fetch(fileApi,{method:'PUT',headers:Object.assign({},head(),{'Content-Type':'application/json'}),body:JSON.stringify({message:'Upload gambar berita: '+clean,content:await fileToBase64(file),branch:BRANCH})});if(!r.ok){let e=await r.json().catch(function(){return{}});throw Error(e.message||'HTTP '+r.status)}return path}
-connect.onclick=async function(){token=$('#token').value.trim();if(!token){loginMsg.className='err';loginMsg.textContent='Masukkan GitHub fine-grained token terlebih dahulu.';return}connect.disabled=true;connect.textContent='Menghubungkan…';loginMsg.className='';loginMsg.textContent='Memeriksa akses GitHub…';try{await load();loginBox.classList.add('hide');appBox.classList.remove('hide')}catch(e){loginMsg.className='err';loginMsg.textContent=e.message||'Login gagal.'}finally{connect.disabled=false;connect.textContent='Hubungkan GitHub'}};
-form.onsubmit=async function(e){e.preventDefault();try{let oldItem=news.find(function(n){return n.id===editId});let imageUrl=image.value.trim();let selected=imageFile.files[0];if(selected){msg.className='';msg.textContent='Mengunggah gambar ke GitHub…';imageUrl=await uploadImage(selected)}if(!imageUrl)imageUrl=(oldItem&&oldItem.image)||DEFAULT_IMAGE;let item={id:editId||Date.now()+'',headline:headline.value.trim(),image:imageUrl,article:article.value.trim(),publishedAt:(oldItem&&oldItem.publishedAt)||new Date().toISOString()};news=editId?news.map(function(n){return n.id===editId?item:n}):[item].concat(news);await save(editId?'Perbarui berita':'Terbitkan berita')}catch(err){msg.className='err';msg.textContent='Gagal upload gambar: '+err.message}};
-cancel.onclick=function(){form.reset();editId=null;formTitle.textContent='Terbitkan berita';msg.textContent=''};
+
+const $=selector=>document.querySelector(selector);
+const esc=value=>String(value||'').replace(/[&<>"']/g,char=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[char]));
+
+const loginBox=$('#login');
+const appBox=$('#app');
+const loginMsg=$('#loginMsg');
+const form=$('#form');
+const headline=$('#headline');
+const tags=$('#tags');
+const image=$('#image');
+const imageFile=$('#imageFile');
+const article=$('#article');
+const formTitle=$('#formTitle');
+const msg=$('#msg');
+const list=$('#list');
+const connect=$('#connect');
+const cancel=$('#cancel');
+
+function head(){
+  return {
+    Authorization:'Bearer '+token,
+    Accept:'application/vnd.github+json'
+  };
+}
+
+function encodeJson(data){
+  return btoa(unescape(encodeURIComponent(JSON.stringify(data,null,2)+'\n')));
+}
+
+function decodeJson(base64){
+  return JSON.parse(decodeURIComponent(escape(atob(base64.replace(/\n/g,'')))));
+}
+
+function parseTags(value){
+  const seen=new Set();
+  return String(value||'')
+    .split(',')
+    .map(tag=>tag.trim().replace(/^#+/,''))
+    .filter(tag=>tag && !seen.has(tag.toLowerCase()) && seen.add(tag.toLowerCase()))
+    .slice(0,10);
+}
+
+function normalizeNews(items){
+  return Array.isArray(items) ? items.map(item=>({
+    id:String(item.id||Date.now()),
+    headline:String(item.headline||''),
+    image:String(item.image||DEFAULT_IMAGE),
+    article:String(item.article||''),
+    tags:Array.isArray(item.tags)?item.tags:[],
+    publishedAt:item.publishedAt||new Date().toISOString(),
+    modifiedAt:item.modifiedAt||item.publishedAt||new Date().toISOString()
+  })) : [];
+}
+
+async function load(){
+  const response=await fetch(api+'?ref='+encodeURIComponent(BRANCH),{headers:head()});
+  if(!response.ok){
+    throw Error('Akses ditolak ('+response.status+'). Token perlu izin Contents: Read and write untuk repository ini.');
+  }
+  const data=await response.json();
+  sha=data.sha;
+  news=normalizeNews(decodeJson(data.content));
+  draw();
+}
+
+function draw(){
+  list.innerHTML=news.map(item=>{
+    return '<div class="item"><strong>'+esc(item.headline)+'</strong><button type="button" data-e="'+esc(item.id)+'">Edit</button><button type="button" data-d="'+esc(item.id)+'">Hapus</button></div>';
+  }).join('')||'Belum ada berita.';
+
+  document.querySelectorAll('[data-e]').forEach(button=>{
+    button.onclick=()=>{
+      const item=news.find(newsItem=>newsItem.id===button.dataset.e);
+      if(!item)return;
+      editId=item.id;
+      headline.value=item.headline;
+      tags.value=(item.tags||[]).join(', ');
+      image.value=item.image||'';
+      imageFile.value='';
+      article.value=item.article;
+      formTitle.textContent='Edit berita';
+      headline.focus();
+    };
+  });
+
+  document.querySelectorAll('[data-d]').forEach(button=>{
+    button.onclick=async()=>{
+      const item=news.find(newsItem=>newsItem.id===button.dataset.d);
+      if(!item || !confirm('Hapus berita "'+item.headline+'"?'))return;
+      news=news.filter(newsItem=>newsItem.id!==item.id);
+      await save('Hapus berita: '+item.headline);
+    };
+  });
+}
+
+async function save(message){
+  msg.className='';
+  msg.textContent='Menyimpan berita…';
+
+  const response=await fetch(api,{
+    method:'PUT',
+    headers:Object.assign({},head(),{'Content-Type':'application/json'}),
+    body:JSON.stringify({
+      message:message,
+      content:encodeJson(news),
+      sha:sha,
+      branch:BRANCH
+    })
+  });
+
+  if(!response.ok){
+    const error=await response.json().catch(()=>({}));
+    msg.className='err';
+    msg.textContent='Gagal menyimpan: '+(error.message||'HTTP '+response.status);
+    return false;
+  }
+
+  const result=await response.json();
+  sha=result.content.sha;
+  msg.className='ok';
+  msg.textContent='Berhasil. Homepage akan diperbarui otomatis setelah proses deploy selesai.';
+  form.reset();
+  editId=null;
+  formTitle.textContent='Terbitkan berita';
+  draw();
+  return true;
+}
+
+function fileToBase64(file){
+  return new Promise((resolve,reject)=>{
+    const reader=new FileReader();
+    reader.onload=()=>resolve(String(reader.result).split(',')[1]);
+    reader.onerror=()=>reject(Error('File gambar tidak dapat dibaca.'));
+    reader.readAsDataURL(file);
+  });
+}
+
+async function uploadImage(file){
+  const allowed=['image/jpeg','image/png','image/webp','image/gif'];
+  if(!allowed.includes(file.type))throw Error('Gunakan gambar JPG, PNG, WebP, atau GIF.');
+  if(file.size>5*1024*1024)throw Error('Ukuran gambar maksimal 5 MB.');
+
+  const ext=(file.name.split('.').pop()||'jpg').toLowerCase().replace(/[^a-z0-9]/g,'')||'jpg';
+  const clean=(headline.value.trim()||'berita')
+    .toLowerCase()
+    .replace(/[^a-z0-9]+/g,'-')
+    .replace(/^-+|-+$/g,'')
+    .slice(0,55)||'berita';
+  const filename=Date.now()+'-'+clean+'.'+ext;
+  const fileApi='https://api.github.com/repos/'+OWNER+'/'+REPO+'/contents/assets/images/'+encodeURIComponent(filename);
+
+  const response=await fetch(fileApi,{
+    method:'PUT',
+    headers:Object.assign({},head(),{'Content-Type':'application/json'}),
+    body:JSON.stringify({
+      message:'Upload gambar berita: '+clean,
+      content:await fileToBase64(file),
+      branch:BRANCH
+    })
+  });
+
+  if(!response.ok){
+    const error=await response.json().catch(()=>({}));
+    throw Error(error.message||'HTTP '+response.status);
+  }
+
+  return 'assets/images/'+filename;
+}
+
+connect.onclick=async()=>{
+  token=$('#token').value.trim();
+  if(!token){
+    loginMsg.className='err';
+    loginMsg.textContent='Masukkan GitHub fine-grained token terlebih dahulu.';
+    return;
+  }
+
+  connect.disabled=true;
+  connect.textContent='Menghubungkan…';
+  loginMsg.className='';
+  loginMsg.textContent='Memeriksa akses GitHub…';
+
+  try{
+    await load();
+    loginBox.classList.add('hide');
+    appBox.classList.remove('hide');
+  }catch(error){
+    loginMsg.className='err';
+    loginMsg.textContent=error.message||'Login gagal.';
+  }finally{
+    connect.disabled=false;
+    connect.textContent='Hubungkan GitHub';
+  }
+};
+
+form.onsubmit=async event=>{
+  event.preventDefault();
+
+  try{
+    const oldItem=news.find(item=>item.id===editId);
+    let imageUrl=image.value.trim();
+    const selected=imageFile.files[0];
+
+    if(selected){
+      msg.className='';
+      msg.textContent='Mengunggah gambar ke GitHub…';
+      imageUrl=await uploadImage(selected);
+    }
+
+    if(!imageUrl)imageUrl=(oldItem&&oldItem.image)||DEFAULT_IMAGE;
+
+    const now=new Date().toISOString();
+    const item={
+      id:editId||String(Date.now()),
+      headline:headline.value.trim(),
+      tags:parseTags(tags.value),
+      image:imageUrl,
+      article:article.value.trim(),
+      publishedAt:(oldItem&&oldItem.publishedAt)||now,
+      modifiedAt:now
+    };
+
+    news=editId
+      ?news.map(newsItem=>newsItem.id===editId?item:newsItem)
+      :[item].concat(news);
+
+    await save(editId?'Perbarui berita: '+item.headline:'Terbitkan berita: '+item.headline);
+  }catch(error){
+    msg.className='err';
+    msg.textContent='Gagal menerbitkan berita: '+error.message;
+  }
+};
+
+cancel.onclick=()=>{
+  form.reset();
+  editId=null;
+  formTitle.textContent='Terbitkan berita';
+  msg.className='';
+  msg.textContent='';
+};
 </script>
 </body>
 </html>
