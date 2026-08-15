@@ -9,7 +9,7 @@
   <link id="canonical" rel="canonical" href="https://www.infocileungsi.web.id/">
 
   <meta property="og:locale" content="id_ID">
-  <meta property="og:type" content="website">
+  <meta id="og-type" property="og:type" content="website">
   <meta property="og:site_name" content="Cileungsi Sekitar">
   <meta id="og-title" property="og:title" content="Cileungsi Sekitar | Berita Lokal Cileungsi dan Sekitarnya">
   <meta id="og-description" property="og:description" content="Kabar dan cerita dari Cileungsi serta kawasan sekitarnya.">
@@ -50,10 +50,10 @@
     :root{--bg:#070b16;--card:#0d172b;--line:#263a5a;--text:#eff6ff;--muted:#9aaac4;--cyan:#39e7ff}
     *{box-sizing:border-box}
     body{margin:0;color:var(--text);font-family:Arial,sans-serif;background:radial-gradient(circle at 12% 0,#193d75,transparent 30%),#070b16}
-    header{position:sticky;top:0;background:#070b16dd;backdrop-filter:blur(14px);border-bottom:1px solid var(--line)}
+    header{position:sticky;top:0;z-index:2;background:#070b16dd;backdrop-filter:blur(14px);border-bottom:1px solid var(--line)}
     nav,main{max-width:1120px;margin:auto;padding:0 22px}
     nav{height:74px;display:flex;align-items:center;justify-content:space-between}
-    .brand{display:flex;align-items:center;gap:10px;font-weight:900;font-size:20px}
+    .brand{display:flex;align-items:center;gap:10px;font-weight:900;font-size:20px;text-decoration:none;color:inherit}
     .brand img{width:38px;height:38px;object-fit:contain;border-radius:9px}
     .brand span,.cyan{color:var(--cyan)}
     .radius{font-size:12px;color:var(--muted);border:1px solid var(--line);border-radius:99px;padding:8px 12px}
@@ -79,7 +79,8 @@
     .article>img{width:100%;height:340px;object-fit:cover}
     .close{position:absolute;top:14px;right:14px;width:40px;height:40px;border-radius:50%;border:1px solid #fff6;background:#06101edd;color:white;font-size:22px;cursor:pointer}
     .articleBody{padding:32px}
-    .articleBody h2{font-size:clamp(29px,5vw,49px);line-height:1.05;margin:9px 0 24px}
+    .articleBody h1{font-size:clamp(29px,5vw,49px);line-height:1.05;margin:9px 0 14px}
+    .articleMeta{margin:0 0 24px;color:var(--muted);font-size:13px}
     .full{white-space:pre-wrap;line-height:1.8;color:#d8e2ef}
     .full a{color:var(--cyan);text-decoration:underline;text-underline-offset:3px}
     .tags{display:flex;flex-wrap:wrap;gap:8px;margin-top:26px}
@@ -90,11 +91,11 @@
 <body>
   <header>
     <nav aria-label="Navigasi utama">
-      <div class="brand">
+      <a class="brand" href="/" aria-label="Beranda Cileungsi Sekitar">
         <img src="https://cdn.phototourl.com/free/2026-08-11-265895a0-1677-4fbf-9f9c-e7e7b550d54c.png" alt="Logo Cileungsi Sekitar" width="38" height="38">
         CILEUNGSI <span>SEKITAR</span>
-      </div>
-      <div class="radius">● Berita Akurat & Tepat</div>
+      </a>
+      <div class="radius">● Berita Akurat &amp; Tepat</div>
     </nav>
   </header>
 
@@ -107,7 +108,9 @@
       <p>Kabar dan cerita dari Cileungsi serta kawasan sekitarnya. Klik berita untuk membaca artikel lengkap.</p>
     </section>
 
-    <section id="grid" class="grid" aria-label="Daftar berita terbaru"></section>
+    <section id="grid" class="grid" aria-label="Daftar berita terbaru">
+      <p>Memuat berita terbaru…</p>
+    </section>
   </main>
 
   <div id="modal" class="modal" role="dialog" aria-modal="true" aria-labelledby="title" aria-hidden="true">
@@ -116,7 +119,8 @@
       <img id="photo" src="" alt="" width="820" height="340">
       <div class="articleBody">
         <div class="tag">CILEUNGSI SEKITAR • ARTIKEL</div>
-        <h2 id="title"></h2>
+        <h1 id="title"></h1>
+        <p id="article-meta" class="articleMeta"></p>
         <div id="text" class="full"></div>
         <div id="tags" class="tags" aria-label="Tag artikel"></div>
       </div>
@@ -134,32 +138,38 @@
     let previouslyFocused = null;
 
     const q = selector => document.querySelector(selector);
-
     const esc = value => String(value || '').replace(/[&<>"']/g, char => ({
-      '&': '&amp;',
-      '<': '&lt;',
-      '>': '&gt;',
-      '"': '&quot;',
-      "'": '&#39;'
+      '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;', "'": '&#39;'
     }[char]));
-
     const cleanText = value => String(value || '').replace(/\s+/g, ' ').trim();
-
     const descriptionFrom = article => {
       const text = cleanText(article);
       return text.length > 155 ? `${text.slice(0, 152)}...` : text;
     };
-
-    const articleUrl = id => `${SITE_URL}#artikel=${encodeURIComponent(id)}`;
+    const articleUrl = id => `${SITE_URL}?artikel=${encodeURIComponent(id)}`;
 
     function setMeta(selector, content) {
       const element = q(selector);
       if (element) element.setAttribute('content', content);
     }
 
+    function toIsoDate(value) {
+      const date = new Date(value);
+      return Number.isNaN(date.getTime()) ? null : date.toISOString();
+    }
+
+    function displayDate(value) {
+      const iso = toIsoDate(value);
+      if (!iso) return '';
+      return new Intl.DateTimeFormat('id-ID', {
+        dateStyle: 'long', timeZone: 'Asia/Jakarta'
+      }).format(new Date(iso));
+    }
+
     function setSeoHome() {
       document.title = DEFAULT_TITLE;
       q('#canonical').href = SITE_URL;
+      setMeta('#og-type', 'website');
       setMeta('meta[name="description"]', DEFAULT_DESCRIPTION);
       setMeta('#og-title', DEFAULT_TITLE);
       setMeta('#og-description', DEFAULT_DESCRIPTION);
@@ -176,144 +186,7 @@
       const description = descriptionFrom(n.article) || DEFAULT_DESCRIPTION;
       const url = articleUrl(n.id);
       const image = n.image || DEFAULT_IMAGE;
+      const published = toIsoDate(n.publishedAt) || new Date().toISOString();
+      const modified = toIsoDate(n.modifiedAt) || published;
 
-      document.title = title;
-      q('#canonical').href = url;
-      setMeta('meta[name="description"]', description);
-      setMeta('#og-title', title);
-      setMeta('#og-description', description);
-      setMeta('#og-url', url);
-      setMeta('#og-image', image);
-      setMeta('#twitter-title', title);
-      setMeta('#twitter-description', description);
-      setMeta('#twitter-image', image);
-
-      q('#article-schema').textContent = JSON.stringify({
-        '@context': 'https://schema.org',
-        '@type': 'NewsArticle',
-        mainEntityOfPage: {'@type': 'WebPage', '@id': url},
-        headline: cleanText(n.headline),
-        description,
-        image: [image],
-        datePublished: n.publishedAt || new Date().toISOString(),
-        dateModified: n.modifiedAt || n.publishedAt || new Date().toISOString(),
-        author: {'@type': 'Organization', name: SITE_NAME, url: SITE_URL},
-        publisher: {
-          '@type': 'Organization',
-          name: SITE_NAME,
-          logo: {'@type': 'ImageObject', url: DEFAULT_IMAGE}
-        },
-        inLanguage: 'id-ID'
-      });
-    }
-
-    function linkify(text) {
-      const escaped = esc(text);
-      return escaped.replace(/(https?:\/\/[^\s<]+)/g, url => {
-        const safeUrl = url.replace(/[.,!?;:]+$/, '');
-        const trailing = url.slice(safeUrl.length);
-        return `<a href="${safeUrl}" target="_blank" rel="noopener">${safeUrl}</a>${trailing}`;
-      });
-    }
-
-    function renderTags(tags) {
-      const validTags = Array.isArray(tags) ? tags : [];
-      q('#tags').innerHTML = validTags
-        .filter(tag => String(tag || '').trim())
-        .map(tag => `<span class="tagItem">#${esc(tag)}</span>`)
-        .join('');
-    }
-
-    function renderGrid() {
-      q('#grid').innerHTML = news.map(n => {
-        const id = esc(n.id);
-        const headline = esc(n.headline);
-        const image = esc(n.image || DEFAULT_IMAGE);
-        const excerpt = esc(descriptionFrom(n.article));
-
-        return `<article class="card">
-          <a href="#artikel=${encodeURIComponent(n.id)}" data-id="${id}" aria-label="Baca artikel: ${headline}">
-            <div class="cover">
-              <img src="${image}" alt="${headline}" width="360" height="205" loading="lazy" decoding="async">
-              <span class="label">BERITA LOKAL</span>
-            </div>
-            <div class="body">
-              <h2>${headline}</h2>
-              <p class="excerpt">${excerpt}</p>
-              <div class="url">CILEUNGSI SEKITAR • BACA ARTIKEL</div>
-            </div>
-          </a>
-        </article>`;
-      }).join('') || '<p>Belum ada berita.</p>';
-
-      document.querySelectorAll('[data-id]').forEach(link => {
-        link.addEventListener('click', event => {
-          event.preventDefault();
-          open(link.dataset.id, true);
-        });
-      });
-    }
-
-    async function start() {
-      try {
-        const response = await fetch('berita.json', {cache: 'no-cache'});
-        if (!response.ok) throw new Error(`HTTP ${response.status}`);
-        news = await response.json();
-        if (!Array.isArray(news)) throw new Error('Format berita.json harus array.');
-      } catch (error) {
-        news = [];
-      }
-
-      renderGrid();
-      openFromHash();
-    }
-
-    function open(id, updateHash) {
-      const n = news.find(item => String(item.id) === String(id));
-      if (!n) return;
-
-      previouslyFocused = document.activeElement;
-      q('#photo').src = n.image || DEFAULT_IMAGE;
-      q('#photo').alt = n.headline || 'Gambar berita Cileungsi Sekitar';
-      q('#title').textContent = n.headline || '';
-      q('#text').innerHTML = linkify(n.article || '');
-      renderTags(n.tags);
-      q('#modal').classList.add('open');
-      q('#modal').setAttribute('aria-hidden', 'false');
-      setSeoArticle(n);
-
-      if (updateHash) history.pushState({article: n.id}, '', `#artikel=${encodeURIComponent(n.id)}`);
-      q('#close').focus();
-    }
-
-    function closeModal(resetUrl) {
-      q('#modal').classList.remove('open');
-      q('#modal').setAttribute('aria-hidden', 'true');
-      if (resetUrl) history.pushState({}, '', SITE_URL);
-      setSeoHome();
-      if (previouslyFocused) previouslyFocused.focus();
-    }
-
-    function openFromHash() {
-      const params = new URLSearchParams(location.hash.replace(/^#/, ''));
-      if (params.has('artikel')) open(params.get('artikel'), false);
-      else closeModal(false);
-    }
-
-    q('#close').addEventListener('click', () => closeModal(true));
-
-    q('#modal').addEventListener('click', event => {
-      if (event.target === q('#modal')) closeModal(true);
-    });
-
-    document.addEventListener('keydown', event => {
-      if (event.key === 'Escape' && q('#modal').classList.contains('open')) closeModal(true);
-    });
-
-    window.addEventListener('hashchange', openFromHash);
-
-    setSeoHome();
-    start();
-  </script>
-</body>
-</html>
+      document.title = ti
