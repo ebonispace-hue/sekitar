@@ -3,4 +3,4 @@ Allow: /
 Disallow: /admin/
 Disallow: /berita.json
 
-Sitemap: https://infocileungsi.web.id/sitemap.xml
+Sitemap: https://www.infocileungsi.web.id/sitemap.xml
